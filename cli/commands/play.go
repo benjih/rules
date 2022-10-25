@@ -73,7 +73,7 @@ type GameState struct {
 	httpClient  TimedHttpClient
 	ruleset     rules.Ruleset
 	gameMap     maps.GameMap
-	outputFile  io.WriteCloser
+	OutputFile  io.WriteCloser
 	idGenerator func(int) string
 }
 
@@ -166,7 +166,7 @@ func (gameState *GameState) Initialize() error {
 		if err != nil {
 			return fmt.Errorf("Failed to open output file: %w", err)
 		}
-		gameState.outputFile = f
+		gameState.OutputFile = f
 	}
 
 	return nil
@@ -187,9 +187,9 @@ func (gameState *GameState) Run() {
 		winner:        SnakeState{},
 		isDraw:        false,
 	}
-	exportGame := gameState.outputFile != nil
+	exportGame := gameState.OutputFile != nil
 	if exportGame {
-		defer gameState.outputFile.Close()
+		defer gameState.OutputFile.Close()
 	}
 
 	boardGame := board.Game{
@@ -318,7 +318,7 @@ func (gameState *GameState) Run() {
 	}
 
 	if exportGame {
-		lines, err := gameExporter.FlushToFile(gameState.outputFile)
+		lines, err := gameExporter.FlushToFile(gameState.OutputFile)
 		if err != nil {
 			log.ERROR.Fatalf("Unable to export game. Reason: %v", err)
 		}

@@ -1,4 +1,4 @@
-module github.com/BattlesnakeOfficial/rules
+module github.com/benjih/rules
 
 go 1.18
 
